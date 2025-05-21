@@ -1,40 +1,62 @@
+const FieldType = {
+    TEXT: 'text',
+    DOLLAR: 'dollar',
+    PERCENT: 'percent',
+    NUMBER: 'number',
+    DECIMAL: 'decimal'
+}
+
+/**
+ * Stores data pertaining to a data field in the comment.
+ */
+class CommentField {
+    constructor(key, label, value, type) {
+        this.key = key;
+        this.label = label;
+        this.value = value;
+        this.enabled = false;
+        this.type = type;
+    }
+
+    /**
+     * Returns a string representation of this field's value, formatted according to its type.
+     * For example, a field of type DOLLAR will be prefixed with '$'.
+     * @returns {*|string}
+     * @constructor
+     */
+    GetValue() {
+        switch (this.type) {
+            case FieldType.DOLLAR:
+                return `$${Number.parseFloat(this.value).toFixed(2)}`;
+                break;
+            case FieldType.PERCENT:
+                return `${this.value}%`;
+                break;
+            default:
+                return this.value;
+        }
+    }
+}
+
 /**
  * Stores form data and generates a comment.
  */
 class CommentData {
     constructor() {
-        // Values of each attribute. Key is ID of an input element
-        this.values = {
-            'summary-value': {'value': '', 'label': ''},
-            'loan-name-value': {'value': '', 'label': 'Loan Name'},
-            'loan-amount-value': {'value': 0.0, 'label': 'Loan Amount'},
-            'loan-term-value': {'value': '', 'label': 'Loan Term'},
-            'interest-rate-value': {'value': 0.0, 'label': 'Interest Rate'},
-            'monthly-income-value': {'value': 0.0, 'label': 'Monthly Income'},
-            'income-verification-value': {'value': '', 'label': 'Income Verification Method'},
-            'dti-before-value': {'value': 0.0, 'label': 'DTI Before'},
-            'dti-after-value': {'value': 0.0, 'label': 'DTI After'},
-            'discretionary-income-value': {'value': 0.0, 'label': 'Discretionary Income'},
-            'credit-score-value': {'value': 0, 'label': 'Credit Score'},
-            'recommendation-value': {'value': '', 'label': 'Recommendation'},
-            'written-rec-value': {'value': '', 'label': ''}
-        };
-
-        // Tracks whether an attribute should be included in the output
-        this.enabled = {
-            'summary-enabled': true,
-            'loan-name-enabled': true,
-            'loan-amount-enabled': true,
-            'loan-term-enabled': true,
-            'interest-rate-enabled': true,
-            'monthly-income-enabled': true,
-            'income-verification-enabled': true,
-            'dti-before-enabled': true,
-            'dti-after-enabled': true,
-            'discretionary-income-enabled': true,
-            'credit-score-enabled': true,
-            'recommendation-enabled': true,
-            'written-rec-enabled': true
+        this.fields = {
+            'summary-value': new CommentField('summary-value', '', '', FieldType.TEXT),
+            'loan-name-value': new CommentField('loan-name-value', 'Loan Name', '', FieldType.TEXT),
+            'loan-amount-value': new CommentField('loan-amount-value', 'Loan Amount', 0.0, FieldType.DOLLAR),
+            'loan-term-value': new CommentField('loan-term-value', 'Loan Term', '', FieldType.TEXT),
+            'interest-rate-value': new CommentField('interest-rate-value', 'Interest Rate', 0.0, FieldType.PERCENT),
+            'monthly-income-value': new CommentField('monthly-income-value', 'Monthly Income', 0.0, FieldType.DOLLAR),
+            'income-verification-value': new CommentField('income-verification-value', 'Income Verification Src', '', FieldType.TEXT),
+            'dti-before-value': new CommentField('dti-before-value', 'DTI Before', 0.0, FieldType.PERCENT),
+            'dti-after-value': new CommentField('dti-after-value', 'DTI After', 0.0, FieldType.PERCENT),
+            'discretionary-income-value': new CommentField('discretionary-income-value', 'Discretionary Income', 0.0, FieldType.DOLLAR),
+            'credit-score-value': new CommentField('credit-score-value', 'Credit Score', 0, FieldType.NUMBER),
+            'recommendation-value': new CommentField('recommendation-value', "Recommendation", '', FieldType.TEXT),
+            'written-rec-value': new CommentField('written-rec-value', '', '', FieldType.TEXT)
         };
 
         // Enum of different sections of comment. Each section contains at least one value.
@@ -61,18 +83,6 @@ class CommentData {
     }
 
     /**
-     * Checks whether an attribute is enabled given the key used to access its value
-     * @param valKey key for attribute's value
-     * @returns {*|boolean} true if enabled, false if disabled or key is invalid
-     */
-    #valIsEnabled(valKey) {
-        const enabledKey = valKey.replace(/-value$/, '-enabled');
-        if (enabledKey in this.enabled)
-            return this.enabled[enabledKey];
-        return false;
-    }
-
-    /**
      * Updates the key-value padding value to be the length of the largest attribute
      * value
      */
@@ -80,10 +90,10 @@ class CommentData {
         this.keyValPadding = 0;
 
         // Update key-value padding
-        for (let key in this.values) {
-            if ((this.#valIsEnabled(key)))
-                if (this.values[key]['label'].length > this.keyValPadding)
-                    this.keyValPadding = this.values[key]['label'].length;
+        for (let key in this.fields) {
+            if ((this.fields[key].enabled))
+                if (this.fields[key].label.length > this.keyValPadding)
+                    this.keyValPadding = this.fields[key].label.length;
         }
     }
 
@@ -95,25 +105,25 @@ class CommentData {
     #sectionIsEnabled(section) {
         switch (section) {
             case this.sections.LOAN_INFO:
-                return this.enabled['loan-name-enabled']
-                    || this.enabled['loan-amount-enabled']
-                    || this.enabled['loan-term-enabled']
-                    || this.enabled['interest-rate-enabled'];
+                return this.fields['loan-name-value'].enabled
+                    || this.fields['loan-amount-value'].enabled
+                    || this.fields['loan-term-value'].enabled
+                    || this.fields['interest-rate-value'].enabled;
                 break;
 
             case this.sections.APPLICANT_INFO:
-                return this.enabled['monthly-income-enabled']
-                    || this.enabled['income-verification-enabled']
-                    || this.enabled['monthly-income-enabled']
-                    || this.enabled['dti-before-enabled']
-                    || this.enabled['dti-after-enabled']
-                    || this.enabled['discretionary-income-enabled']
-                    || this.enabled['credit-score-enabled'];
+                return this.fields['monthly-income-value'].enabled
+                    || this.fields['income-verification-value'].enabled
+                    || this.fields['monthly-income-value'].enabled
+                    || this.fields['dti-before-value'].enabled
+                    || this.fields['dti-after-value'].enabled
+                    || this.fields['discretionary-income-value'].enabled
+                    || this.fields['credit-score-value'].enabled;
                 break;
 
             case this.sections.RECOMMENDATION:
-                return this.enabled['recommendation-enabled']
-                    || this.enabled['written-rec-enabled'];
+                return this.fields['recommendation-value'].enabled
+                    || this.fields['written-rec-value'].enabled;
                 break;
 
             default:
@@ -161,14 +171,14 @@ class CommentData {
      * @returns {*|string} resulting formatted string
      */
     #printAttribute(attributeName) {
-        if (!(attributeName in this.values) || !(this.#valIsEnabled(attributeName)))
+        if (!(attributeName in this.fields) || !(this.fields[attributeName].enabled))
             return '';
 
-        let result = this.values[attributeName]['label'];
+        let result = this.fields[attributeName].label;
         result += ': ';
-        for (let i = 0; i < (this.keyValPadding - this.values[attributeName]['label'].length); i++)
+        for (let i = 0; i < (this.keyValPadding - this.fields[attributeName].label.length); i++)
             result += ' ';
-        result += this.values[attributeName]['value'];
+        result += this.fields[attributeName].GetValue();
         result += '\n';
 
         return result;
@@ -180,9 +190,9 @@ class CommentData {
      * @param value new value
      */
     updateAttrVal(attributeName, value) {
-        if (!(attributeName in this.values))
+        if (!(attributeName in this.fields))
             return;
-        this.values[attributeName]['value'] = value;
+        this.fields[attributeName].value = value;
         this.#updateKeyValPadding();
     }
 
@@ -192,9 +202,10 @@ class CommentData {
      * @param enabled new enabled status
      */
     updateAttrEnabled(attributeName, enabled) {
-        if (!(attributeName in this.enabled))
+        const fieldKey = attributeName.replace(/-enabled$/, '-value');
+        if (!(fieldKey in this.fields))
             return;
-        this.enabled[attributeName] = enabled;
+        this.fields[fieldKey].enabled = enabled;
         this.#updateKeyValPadding();
     }
 
@@ -203,8 +214,8 @@ class CommentData {
         let result = '';
 
         // Add summary
-        if (this.enabled['summary-enabled']) {
-            result += this.values['summary-value']['value'];
+        if (this.fields['summary-value'].enabled) {
+            result += this.fields['summary-value'].value;
             result += '\n\n';
         }
 
@@ -234,8 +245,8 @@ class CommentData {
             result += this.#createBorder('Recommendation');
             result += '\n';
             result += this.#printAttribute('recommendation-value');
-            if (this.#valIsEnabled('written-rec-value'))
-                result += this.values['written-rec-value']['value'];
+            if (this.fields["written-rec-value"].enabled)
+                result += this.fields['written-rec-value'].value;
             result += '\n';
         }
 
