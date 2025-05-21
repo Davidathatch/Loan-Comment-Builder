@@ -1,0 +1,119 @@
+body {
+    font-family: "Outfit", sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    background-color: #212121;
+}
+
+main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#page-title {
+    font-weight: bold;
+    font-size: 2em;
+    margin: 15px 15px 15px 15px;
+    flex-basis: auto;
+}
+
+/*WORKSPACE*/
+/*------------------------------------*/
+#workspace {
+    padding: 0 2.5%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.workspace-container {
+    width: 45%;
+    height: 95%;
+    background-color: #323232;
+    border-radius: 5px;
+    border: #8D8D8D solid 2px;
+    margin: 0;
+}
+
+/*------------------------------------*/
+
+/*EDITOR*/
+/*------------------------------------*/
+#editor {
+    overflow-y: scroll;
+}
+
+#editor-body {
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.attribute-editor {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 85%;
+    margin: 0 auto;
+    gap: 5px;
+}
+
+.attribute-header {
+    flex-grow: 1;
+    display: flex;
+    gap: 5px;
+}
+
+.attribute-header h3 {
+    margin: 0;
+}
+
+.attribute-header input:checked {
+    accent-color: #7FAF70;
+}
+
+.attribute-body {
+    flex-grow: 3;
+}
+
+.attribute-body * {
+    width: 100%;
+    background-color: #424242;
+    color: white;
+    border-radius: 5px;
+    border: #8D8D8D solid 2px;
+    padding: 5px;
+}
+
+.attribute-divider {
+    width: 50%;
+    margin: 35px auto;
+}
+
+/*------------------------------------*/
+
+/*OUTPUT*/
+/*------------------------------------*/
+#output {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#final-output {
+    height: 90%;
+    width: 90%;
+    margin: auto;
+    background-color: #424242;
+    color: white;
+    border-radius: 5px;
+    border: #8D8D8D solid 2px;
+    padding: 3px 0;
+}
+/*------------------------------------*/

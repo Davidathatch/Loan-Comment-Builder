@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Comment Builder</title>
+
+    <!--    STYLE-->
+    <link rel="stylesheet" href="style.css">
+
+    <!--    GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<main>
+    <h1 id="page-title">Loan Comment Builder</h1>
+
+    <section id="workspace">
+        <section id="editor" class="workspace-container">
+            <section id="editor-body">
+                <!--            SUMMARY-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="summary-enabled" class="attribute-checkbox">
+                        <h3>Summary</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <textarea id="summary-value" class="attribute-input" rows="5"
+                                  cols="50"></textarea>
+                    </div>
+                </div>
+
+                <hr class="attribute-divider">
+
+                <!--            LOAN NAME-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="loan-name-enabled" class="attribute-checkbox">
+                        <h3>Loan Name</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="text" id="loan-name-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <!--            LOAN AMOUNT-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="loan-amount-enabled" class="attribute-checkbox">
+                        <h3>Loan Amount</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="number" id="loan-amount-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <!--            LOAN TERM-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="loan-term-enabled" class="attribute-checkbox">
+                        <h3>Loan Term</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="text" id="loan-term-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <!--            INTEREST RATE-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="interest-rate-enabled" class="attribute-checkbox">
+                        <h3>Interest Rate</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="number" id="interest-rate-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <hr class="attribute-divider">
+
+                <!--            MONTHLY INCOME-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="monthly-income-enabled" class="attribute-checkbox">
+                        <h3>Monthly Income</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="number" id="monthly-income-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <!--            INCOME VERIFICATION SOURCE-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="income-verification-enabled" class="attribute-checkbox">
+                        <h3>Income Verification Source</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <select id="income-verification-value" class="attribute-input">
+                            <option></option>
+                            <option value="Pay-stub">Pay-stub 📃</option>
+                            <option value="W2">W2 🧮</option>
+                            <option value="Income Insight">Income Insight 🤖</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--            DTI BEFORE-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="dti-before-enabled" class="attribute-checkbox">
+                        <h3>DTI Before</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="number" id="dti-before-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <!--            DTI AFTER-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="dti-after-enabled" class="attribute-checkbox">
+                        <h3>DTI After</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="number" id="dti-after-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <!--            DISCRETIONARY INCOME-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="discretionary-income-enabled" class="attribute-checkbox">
+                        <h3>Discretionary Income</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="number" id="discretionary-income-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <!--            CREDIT SCORE-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="credit-score-enabled" class="attribute-checkbox">
+                        <h3>Credit Score</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <input type="number" id="credit-score-value" class="attribute-input">
+                    </div>
+                </div>
+
+                <hr class="attribute-divider">
+
+                <!--            RECOMMENDATION-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="recommendation-enabled" class="attribute-checkbox">
+                        <h3>Recommendation</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <select id="recommendation-value" class="attribute-input">
+                            <option></option>
+                            <option value="Approve">Approve ✅</option>
+                            <option value="Deny">Deny 🚫</option>
+                            <option value="Counter">Counter ⚠️</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--            WRITTEN RECOMMENDATION-->
+                <div class="attribute-editor">
+                    <div class="attribute-header">
+                        <input type="checkbox" id="written-rec-enabled" class="attribute-checkbox">
+                        <h3>Written Recommendation</h3>
+                    </div>
+                    <div class="attribute-body">
+                        <textarea id="written-rec-value" class="attribute-input" rows="5"
+                                  cols="50"></textarea>
+                    </div>
+                </div>
+
+            </section>
+        </section>
+
+        <section id="output" class="workspace-container">
+            <textarea id="final-output" class="workspace-container"></textarea>
+        </section>
+    </section>
+</main>
+</body>
+
+<script src="index.js"></script>
+</html>
